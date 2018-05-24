@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 
 import {GoogleMap, GoogleMapOptions, GoogleMaps, GoogleMapsEvent} from '@ionic-native/google-maps';
@@ -10,8 +10,10 @@ import {Home2Page} from "../home2/home2";
 })
 export class HomePage {
   map: GoogleMap;
+  show = false;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController,
+              protected ref: ChangeDetectorRef) {
 
   }
 
@@ -20,7 +22,6 @@ export class HomePage {
   }
 
   loadMap() {
-
     let mapOptions: GoogleMapOptions = {
       camera: {
         target: {
@@ -37,9 +38,6 @@ export class HomePage {
     // Wait the MAP_READY before using any methods.
     this.map.one(GoogleMapsEvent.MAP_READY)
       .then(() => {
-        console.log('Map is ready!');
-
-        // Now you can use all methods safely.
         this.map.addMarker({
           title: 'Ionic',
           icon: 'blue',
@@ -52,14 +50,21 @@ export class HomePage {
           .then(marker => {
             marker.on(GoogleMapsEvent.MARKER_CLICK)
               .subscribe(() => {
-                alert('clicked');
+                // alert('marker clicked');
+                this.show = true;
+                this.ref.detectChanges();
               });
           });
-
       });
   }
 
   onChangePage() {
     this.navCtrl.push(Home2Page, {}, {animate: true});
   }
+
+  // ionViewDidEnter() {
+  //   if (this.map) {
+  //     this.map.setDiv('map_canvas');
+  //   }
+  // }
 }

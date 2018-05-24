@@ -7,11 +7,18 @@
 </ion-header>
 
 <ion-content padding>
-    <div id="map_canvas" style="width:300px; height:300px"></div>
-    <button ion-button (click)="onChangePage()">Change page</button>
+    <div style="position:relative">
+        <div id="map_canvas" style="width:300px; height:300px; background:green"></div>
+        <div *ngIf="show" style="position:absolute; top:1rem; left:1rem;">
+            <button ion-button (click)="onChangePage()">Change page</button>
+        </div>
+    </div>
 
-    The world is your oyster.
-    <p>
-        If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-    </p>
+    <button ion-button (click)="show=!show">Toggle overlay</button>
+    <ol>
+        <li>Click marker - overlay shows</li>
+        <li>Click overlay - nothing happens</li>
+        <li>Toggle overlay to hide and show</li>
+        <li>Click overlay - it works</li>
+    </ol>
 </ion-content>
