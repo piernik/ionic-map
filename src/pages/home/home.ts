@@ -4,6 +4,8 @@ import {NavController} from 'ionic-angular';
 import {GoogleMap, GoogleMapOptions, GoogleMaps, GoogleMapsEvent} from '@ionic-native/google-maps';
 import {Home2Page} from "../home2/home2";
 
+declare var cordova: any;
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -53,6 +55,9 @@ export class HomePage {
                 // alert('marker clicked');
                 this.show = true;
                 this.ref.detectChanges();
+                setTimeout(() => {
+                  cordova.fireDocumentEvent('plugin_touch', {});
+                },100);
               });
           });
       });
@@ -61,10 +66,4 @@ export class HomePage {
   onChangePage() {
     this.navCtrl.push(Home2Page, {}, {animate: true});
   }
-
-  // ionViewDidEnter() {
-  //   if (this.map) {
-  //     this.map.setDiv('map_canvas');
-  //   }
-  // }
 }
